@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <title>
+        I Got THe Answer
+        </title>
+    </head>
+    <body>
+        <h1>
+            upload
+        </h1>
+        <input name="" type="file"/>
+        <button>
+            Submit
+        </button>
+
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-storage.js"></script>
+
+
+<script>
+ 
+  var firebaseConfig = {
+   apiKey: "AIzaSyDt98nsJ3SB4xe9cZGYT3hmrEzvk0oMNPo",
+  authDomain: "fileupload-59168.firebaseapp.com",
+  projectId: "fileupload-59168",
+  storageBucket: "fileupload-59168.appspot.com",
+  messagingSenderId: "256910767239",
+  appId: "1:256910767239:web:ead31023f1de43fe71f422"
+  };
+  
+  firebase.initializeApp(firebaseConfig);
+  const btn = document.querySelector('button')
+
+btn.addEventListener('click',e =>{
+
+	const file = document.querySelector('input').files[0]
+
+	const storageRef = firebase.storage().ref()
+	
+const final =storageRef.child(`images/${file}`)
+
+	const task = final.put(file)
+
+task.on('state_changed',
+		
+		function progress(progress){
+
+			console.log(progress.bytesTransferred / progress.totalBytes *100)
+		},  
+		function error(err){
+			console.log('There was An Err ' + err)
+		},
+		 function completed(){
+		 	final.getDownloadURL()
+		 	
+		 	.then(url=>{
+		 		
+		 		document.querySelector('body').innerHTML =`<h1> ${url}<h1/>`
+		 	})
+		 }
+
+		)
+
+})
+
+var storage = firebase.storage();
+var storageref = storage.ref();
+
+$('#list').find('tbody').html('');
+var i=0;
+storageRef.child('contactFromImages')
+ 
+</script>
+
+
+    </body>
+</html>
